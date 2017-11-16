@@ -18,7 +18,14 @@ import java.util.Map;
 public class Kata5 {
     public static Double execute() {
         List<Movie> movies = DataUtil.getMovies();
-
-        return 3.0;
+        
+        if(movies.isEmpty())
+        	return null;
+        
+        return movies.stream()
+        		.map(Movie::getRating)
+        		.max((rating1, rating2) -> Double.compare( rating1, rating2))
+        		.orElse(0.0);
+        		        
     }
 }

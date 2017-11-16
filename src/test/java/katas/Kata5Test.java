@@ -10,6 +10,6 @@ public class Kata5Test {
 
     @Test
     public void testExecute() {
-        Assert.assertThat(Kata5.execute(), equalTo(4));
+        Assert.assertThat(Kata5.execute(), equalTo(5.0));
     }
 }
