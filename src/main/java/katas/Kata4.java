@@ -25,6 +25,7 @@ public class Kata4 {
     private static final Integer BOXART_WIDTH = 150;
 
     public static List<Map> execute() {
+
 	List<MovieList> movieLists = DataUtil.getMovieLists();
 
 	return movieLists.stream()
@@ -41,6 +42,7 @@ public class Kata4 {
 		.map(BoxArt::getUrl).findFirst();
 
 	return specificBoxArt.isPresent() ? specificBoxArt.get() : "";
+
     }
 
 }

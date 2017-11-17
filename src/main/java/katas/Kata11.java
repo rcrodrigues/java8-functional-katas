@@ -59,7 +59,12 @@ import util.DataUtil;
     Output: the given datastructure
 */
 public class Kata11 {
+
+    private Kata11() {
+    }
+
     public static List<Map> execute() {
+
 	List<Map> lists = DataUtil.getLists();
 	List<Map> videos = DataUtil.getVideos();
 	List<Map> boxArts = DataUtil.getBoxArts();
@@ -87,9 +92,11 @@ public class Kata11 {
 
     private static Object getTime(Object videoId, List<Map> bookmarkList) {
 
-	Optional bookmarkTime = bookmarkList.stream().filter(bookmark -> bookmark.get("videoId").equals(videoId))
-		.map(bookmark -> bookmark.get("time")).findFirst();
+	Optional<Object> bookmarkTime = bookmarkList.stream()
+		.filter(bookmark -> bookmark.get("videoId").equals(videoId)).map(bookmark -> bookmark.get("time"))
+		.findFirst();
 
 	return bookmarkTime.isPresent() ? bookmarkTime.get() : "";
+
     }
 }

@@ -17,7 +17,9 @@ import util.DataUtil;
     Output: List of ImmutableMap.of("videoId", "5", "bookmarkId", "3")
 */
 public class Kata8 {
+
     public static List<Map> execute() {
+
 	List<Movie> movies = DataUtil.getMovies();
 	List<Bookmark> bookMarks = DataUtil.getBookMarks();
 

@@ -1,5 +1,6 @@
 package katas;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,9 +35,12 @@ public class Kata9 {
 
     }
 
-    private static InterestingMoment getMiddleInterestingMoment(List<InterestingMoment> moments) {
+    private static Date getMiddleInterestingMoment(List<InterestingMoment> moments) {
 
-	return moments.stream().filter(moment -> moment.getType().equals("Middle")).findFirst().orElse(null);
+	Optional<Date> middleMoment = moments.stream().filter(moment -> moment.getType().equals("Middle"))
+		.map(InterestingMoment::getTime).findFirst();
+
+	return middleMoment.isPresent() ? middleMoment.get() : null;
 
     }
 

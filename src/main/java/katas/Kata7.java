@@ -22,6 +22,7 @@ public class Kata7 {
     }
 
     public static List<Map> execute() {
+
 	List<MovieList> movieLists = DataUtil.getMovieLists();
 
 	return movieLists.stream()
@@ -37,10 +38,7 @@ public class Kata7 {
 		(box1, box2) -> Integer.compare(box1.getWidth() * box1.getHeight(), box2.getHeight() * box2.getWidth()))
 		.map(BoxArt::getUrl);
 
-	if (boxUrl.isPresent())
-	    return boxUrl.get();
-	else
-	    return null;
+	return boxUrl.isPresent() ? boxUrl.get() : "";
 
     }
 }

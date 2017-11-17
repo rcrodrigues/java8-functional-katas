@@ -16,10 +16,8 @@ public class Kata5 {
     }
 
     public static Double execute() {
-	List<Movie> movies = DataUtil.getMovies();
 
-	if (movies.isEmpty())
-	    return null;
+	List<Movie> movies = DataUtil.getMovies();
 
 	return movies.stream().map(Movie::getRating).max(Double::compare).orElse(0.0);
 

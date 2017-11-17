@@ -50,7 +50,12 @@ import util.DataUtil;
     Output: the given datastructure
 */
 public class Kata10 {
+
+    private Kata10() {
+    }
+
     public static List<Map> execute() {
+
 	List<Map> lists = DataUtil.getLists();
 	List<Map> videos = DataUtil.getVideos();
 

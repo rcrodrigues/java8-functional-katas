@@ -17,7 +17,6 @@ import util.DataUtil;
 public class Kata1 {
 
     private Kata1() {
-
     }
 
     public static List<Map> execute() {
