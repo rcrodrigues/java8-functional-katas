@@ -1,15 +1,14 @@
 package katas;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-
-
 public class Kata10Test {
 
-    @Test
-    public void testExecute() {
-        Assert.assertThat(Kata10.execute(), equalTo(4));
-    }
+	@Test
+	public void testExecute() {
+		Assert.assertThat(Kata10.execute().size(), equalTo(2));
+	}
 }

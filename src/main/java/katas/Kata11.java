@@ -1,11 +1,13 @@
 package katas;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import util.DataUtil;
-
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.ImmutableMap;
+
+import util.DataUtil;
 
 /*
     Goal: Create a datastructure from the given data:
@@ -58,13 +60,36 @@ import java.util.Map;
 */
 public class Kata11 {
     public static List<Map> execute() {
-        List<Map> lists = DataUtil.getLists();
-        List<Map> videos = DataUtil.getVideos();
-        List<Map> boxArts = DataUtil.getBoxArts();
-        List<Map> bookmarkList = DataUtil.getBookmarkList();
+	List<Map> lists = DataUtil.getLists();
+	List<Map> videos = DataUtil.getVideos();
+	List<Map> boxArts = DataUtil.getBoxArts();
+	List<Map> bookmarkList = DataUtil.getBookmarkList();
 
-        return ImmutableList.of(ImmutableMap.of("name", "someName", "videos", ImmutableList.of(
-                ImmutableMap.of("id", 5, "title", "The Chamber", "time", 123, "boxart", "someUrl")
-        )));
+	return lists.stream().map(list -> ImmutableMap.of("name", list.get("name"), "videos",
+		videos.stream().filter(video -> video.get("listId").equals(list.get("id")))
+			.map(video -> ImmutableMap.of("id", video.get("id"), "title", video.get("title"), "time",
+				getTime(video.get("id"), bookmarkList), "boxart", getSmallestBoxArtUrl(boxArts)))
+			.collect(Collectors.toList())))
+		.collect(Collectors.toList());
+
+    }
+
+    private static String getSmallestBoxArtUrl(List<Map> boxArts) {
+
+	Optional<String> boxUrl = boxArts.stream()
+		.min((box1, box2) -> Integer.compare((Integer) box1.get("width") * (Integer) box1.get("height"),
+			(Integer) box2.get("width") * (Integer) box2.get("height")))
+		.map(boxArt -> boxArt.get("url").toString());
+
+	return boxUrl.isPresent() ? boxUrl.get() : "";
+
+    }
+
+    private static Object getTime(Object videoId, List<Map> bookmarkList) {
+
+	Optional bookmarkTime = bookmarkList.stream().filter(bookmark -> bookmark.get("videoId").equals(videoId))
+		.map(bookmark -> bookmark.get("time")).findFirst();
+
+	return bookmarkTime.isPresent() ? bookmarkTime.get() : "";
     }
 }

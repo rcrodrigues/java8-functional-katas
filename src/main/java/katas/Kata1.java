@@ -15,16 +15,14 @@ import util.DataUtil;
 	Output: List of ImmutableMap.of("id", "5", "title", "Bad Boys")
 */
 public class Kata1 {
-	
+
 	private Kata1() {
-		
+
 	}
-	
+
 	public static List<Map> execute() {
-		
+
 		List<Movie> movies = DataUtil.getMovies();
-		return movies.stream()
-				.map(movie -> ImmutableMap.of("id", movie.getId(), "title", movie.getTitle()))
-				.collect(Collectors.toList());
+		return movies.stream().map(movie -> ImmutableMap.of("id", movie.getId(), "title", movie.getTitle())).collect(Collectors.toList());
 	}
 }

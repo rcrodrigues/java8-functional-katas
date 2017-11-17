@@ -11,19 +11,17 @@ import util.DataUtil;
     Output: Double
 */
 public class Kata5 {
-	
-	private Kata5 () {}
-	
-    public static Double execute() {
-        List<Movie> movies = DataUtil.getMovies();
-        
-        if(movies.isEmpty())
-        	return null;
-        
-        return movies.stream()
-        		.map(Movie::getRating)
-        		.max(Double::compare)
-        		.orElse(0.0);
-        		
-    }
+
+	private Kata5() {
+	}
+
+	public static Double execute() {
+		List<Movie> movies = DataUtil.getMovies();
+
+		if (movies.isEmpty())
+			return null;
+
+		return movies.stream().map(Movie::getRating).max(Double::compare).orElse(0.0);
+
+	}
 }
