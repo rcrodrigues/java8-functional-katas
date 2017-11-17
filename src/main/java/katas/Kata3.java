@@ -13,9 +13,10 @@ import util.DataUtil;
     Output: List of Integers
 */
 public class Kata3 {
-	public static List<Integer> execute() {
-		List<MovieList> movieLists = DataUtil.getMovieLists();
+    public static List<Integer> execute() {
+	List<MovieList> movieLists = DataUtil.getMovieLists();
 
-		return movieLists.stream().flatMap(list -> list.getVideos().stream()).map(Movie::getId).collect(Collectors.toList());
-	}
+	return movieLists.stream().flatMap(list -> list.getVideos().stream()).map(Movie::getId)
+		.collect(Collectors.toList());
+    }
 }

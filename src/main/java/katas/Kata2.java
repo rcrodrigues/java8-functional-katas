@@ -13,14 +13,15 @@ import util.DataUtil;
 */
 public class Kata2 {
 
-	private Kata2() {
-	}
+    private Kata2() {
+    }
 
-	public static List<Integer> execute() {
+    public static List<Integer> execute() {
 
-		List<Movie> movies = DataUtil.getMovies();
-		Double rateFive = new Double(5.0);
+	List<Movie> movies = DataUtil.getMovies();
+	Double rateFive = new Double(5.0);
 
-		return movies.stream().filter(movie -> movie.getRating().equals(rateFive)).map(movie -> movie.getId()).collect(Collectors.toList());
-	}
+	return movies.stream().filter(movie -> movie.getRating().equals(rateFive)).map(movie -> movie.getId())
+		.collect(Collectors.toList());
+    }
 }

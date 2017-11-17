@@ -17,12 +17,15 @@ import util.DataUtil;
     Output: List of ImmutableMap.of("videoId", "5", "bookmarkId", "3")
 */
 public class Kata8 {
-	public static List<Map> execute() {
-		List<Movie> movies = DataUtil.getMovies();
-		List<Bookmark> bookMarks = DataUtil.getBookMarks();
+    public static List<Map> execute() {
+	List<Movie> movies = DataUtil.getMovies();
+	List<Bookmark> bookMarks = DataUtil.getBookMarks();
 
-		return StreamUtils.zip(movies.stream(), bookMarks.stream(), (movie, bookMark) -> ImmutableMap.of("videoId", movie.getId(), "bookmarkId", bookMark.getId())).collect(Collectors.toList());
+	return StreamUtils
+		.zip(movies.stream(), bookMarks.stream(),
+			(movie, bookMark) -> ImmutableMap.of("videoId", movie.getId(), "bookmarkId", bookMark.getId()))
+		.collect(Collectors.toList());
 
-	}
+    }
 
 }

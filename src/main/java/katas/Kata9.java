@@ -19,28 +19,34 @@ import util.DataUtil;
 */
 public class Kata9 {
 
-	private Kata9() {
-	}
+    private Kata9() {
+    }
 
-	public static List<Map> execute() {
+    public static List<Map> execute() {
 
-		List<Movie> movies = DataUtil.getMovies();
+	List<Movie> movies = DataUtil.getMovies();
 
-		return movies.stream().map(movie -> ImmutableMap.of("id", movie.getId(), "title", movie.getTitle(), "time", getMiddleInterestingMoment(movie.getInterestingMoments()), "url", getSmallestBoxArtUrl(movie.getBoxarts()))).collect(Collectors.toList());
+	return movies.stream()
+		.map(movie -> ImmutableMap.of("id", movie.getId(), "title", movie.getTitle(), "time",
+			getMiddleInterestingMoment(movie.getInterestingMoments()), "url",
+			getSmallestBoxArtUrl(movie.getBoxarts())))
+		.collect(Collectors.toList());
 
-	}
+    }
 
-	private static InterestingMoment getMiddleInterestingMoment(List<InterestingMoment> moments) {
+    private static InterestingMoment getMiddleInterestingMoment(List<InterestingMoment> moments) {
 
-		return moments.stream().filter(moment -> moment.getType().equals("Middle")).findFirst().orElse(null);
+	return moments.stream().filter(moment -> moment.getType().equals("Middle")).findFirst().orElse(null);
 
-	}
+    }
 
-	private static String getSmallestBoxArtUrl(List<BoxArt> boxArts) {
+    private static String getSmallestBoxArtUrl(List<BoxArt> boxArts) {
 
-		Optional<String> boxUrl = boxArts.stream().min((box1, box2) -> Integer.compare(box1.getWidth() * box1.getHeight(), box2.getHeight() * box2.getWidth())).map(BoxArt::getUrl);
+	Optional<String> boxUrl = boxArts.stream().min(
+		(box1, box2) -> Integer.compare(box1.getWidth() * box1.getHeight(), box2.getHeight() * box2.getWidth()))
+		.map(BoxArt::getUrl);
 
-		return boxUrl.isPresent() ? boxUrl.get() : "";
+	return boxUrl.isPresent() ? boxUrl.get() : "";
 
-	}
+    }
 }

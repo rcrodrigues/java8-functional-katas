@@ -16,13 +16,14 @@ import util.DataUtil;
 */
 public class Kata1 {
 
-	private Kata1() {
+    private Kata1() {
 
-	}
+    }
 
-	public static List<Map> execute() {
+    public static List<Map> execute() {
 
-		List<Movie> movies = DataUtil.getMovies();
-		return movies.stream().map(movie -> ImmutableMap.of("id", movie.getId(), "title", movie.getTitle())).collect(Collectors.toList());
-	}
+	List<Movie> movies = DataUtil.getMovies();
+	return movies.stream().map(movie -> ImmutableMap.of("id", movie.getId(), "title", movie.getTitle()))
+		.collect(Collectors.toList());
+    }
 }
