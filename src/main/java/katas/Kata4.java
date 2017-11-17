@@ -1,15 +1,14 @@
 package katas;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import model.BoxArt;
-import model.Movie;
-import model.MovieList;
-import util.DataUtil;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.google.common.collect.ImmutableMap;
+
+import model.BoxArt;
+import model.MovieList;
+import util.DataUtil;
 
 /*
     Goal: Retrieve id, title, and a 150x200 box art url for every video
@@ -17,6 +16,12 @@ import java.util.stream.Collectors;
     Output: List of ImmutableMap.of("id", "5", "title", "Bad Boys", "boxart": BoxArt)
 */
 public class Kata4 {
+	
+	private Kata4 () {}
+	
+	private static final Integer BOXART_HEIGHT = 200;
+	private static final Integer BOXART_WIDTH = 150;
+	
     public static List<Map> execute() {
         List<MovieList> movieLists = DataUtil.getMovieLists();
         
@@ -25,8 +30,17 @@ public class Kata4 {
         		.map(movie -> ImmutableMap.of(
 							"id", movie.getId() ,
 							"title", movie.getTitle(), 
-							"boxart", movie.getBoxarts().get(0)))
+							"boxart", getBoxArt(movie.getBoxarts(),BOXART_WIDTH,BOXART_HEIGHT)))
         		.collect(Collectors.toList());
         
     }
+    
+    public static BoxArt getBoxArt(List<BoxArt> boxArts, Integer width, Integer height) {
+    	
+    	return boxArts.stream()
+    			.filter( boxArt -> boxArt.getWidth().equals(width) && boxArt.getHeight().equals(height))
+    			.findFirst()
+    			.orElse(null);
+    }
+    
 }
