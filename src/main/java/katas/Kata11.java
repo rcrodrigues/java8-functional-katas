@@ -1,8 +1,8 @@
 package katas;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
@@ -63,6 +63,7 @@ public class Kata11 {
     private Kata11() {
     }
 
+    @SuppressWarnings("unchecked")
     public static List<Map> execute() {
 
 	List<Map> lists = DataUtil.getLists();
@@ -70,33 +71,28 @@ public class Kata11 {
 	List<Map> boxArts = DataUtil.getBoxArts();
 	List<Map> bookmarkList = DataUtil.getBookmarkList();
 
-	return lists.stream().map(list -> ImmutableMap.of("name", list.get("name"), "videos",
-		videos.stream().filter(video -> video.get("listId").equals(list.get("id")))
-			.map(video -> ImmutableMap.of("id", video.get("id"), "title", video.get("title"), "time",
-				getTime(video.get("id"), bookmarkList), "boxart", getSmallestBoxArtUrl(boxArts)))
-			.collect(Collectors.toList())))
+	return lists.stream()
+		.map(list -> ImmutableMap.of("name", list.get("name"), "videos",
+			videos.stream().filter(video -> video.get("listId").equals(list.get("id")))
+				.map(video -> ImmutableMap.of("id", video.get("id"), "title",
+					video.get("title"), "time", getTime(video.get("id"), bookmarkList), "boxart",
+					boxArts.stream().min(boxArtSize()).map(boxArt -> boxArt.get("url").toString())))
+				.collect(Collectors.toList())))
 		.collect(Collectors.toList());
 
     }
 
-    private static String getSmallestBoxArtUrl(List<Map> boxArts) {
+    private static Comparator<Map> boxArtSize() {
 
-	Optional<String> boxUrl = boxArts.stream()
-		.min((box1, box2) -> Integer.compare((Integer) box1.get("width") * (Integer) box1.get("height"),
-			(Integer) box2.get("width") * (Integer) box2.get("height")))
-		.map(boxArt -> boxArt.get("url").toString());
-
-	return boxUrl.isPresent() ? boxUrl.get() : "";
+	return (box1, box2) -> Integer.compare((Integer) box1.get("width") * (Integer) box1.get("height"),
+		(Integer) box2.get("width") * (Integer) box2.get("height"));
 
     }
 
     private static Object getTime(Object videoId, List<Map> bookmarkList) {
 
-	Optional<Object> bookmarkTime = bookmarkList.stream()
-		.filter(bookmark -> bookmark.get("videoId").equals(videoId)).map(bookmark -> bookmark.get("time"))
-		.findFirst();
-
-	return bookmarkTime.isPresent() ? bookmarkTime.get() : "";
+	return bookmarkList.stream().filter(bookmark -> bookmark.get("videoId").equals(videoId))
+		.map(bookmark -> bookmark.get("time")).findFirst().orElse(null);
 
     }
 }
