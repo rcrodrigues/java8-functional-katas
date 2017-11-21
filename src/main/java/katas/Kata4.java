@@ -2,7 +2,7 @@ package katas;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
@@ -28,21 +28,15 @@ public class Kata4 {
 
 	List<MovieList> movieLists = DataUtil.getMovieLists();
 
-	return movieLists.stream()
-		.flatMap(list -> list.getVideos().stream()).map(movie -> ImmutableMap.of("id", movie.getId(), "title",
-			movie.getTitle(), "boxart", getBoxArtUrl(movie.getBoxarts(), BOXART_WIDTH, BOXART_HEIGHT)))
+	return movieLists.stream().flatMap(list -> list.getVideos().stream())
+		.map(movie -> ImmutableMap.of("id", movie.getId(), "title", movie.getTitle(), "boxart",
+			movie.getBoxarts().stream().filter(getBoxUrl()).map(BoxArt::getUrl).findFirst().orElse("")))
 		.collect(Collectors.toList());
 
     }
 
-    public static String getBoxArtUrl(List<BoxArt> boxArts, Integer width, Integer height) {
-
-	Optional<String> specificBoxArt = boxArts.stream()
-		.filter(boxArt -> boxArt.getWidth().equals(width) && boxArt.getHeight().equals(height))
-		.map(BoxArt::getUrl).findFirst();
-
-	return specificBoxArt.isPresent() ? specificBoxArt.get() : "";
-
+    private static Predicate<BoxArt> getBoxUrl() {
+	return boxArt -> BOXART_WIDTH.equals(boxArt.getWidth()) && BOXART_HEIGHT.equals(boxArt.getHeight());
     }
 
 }

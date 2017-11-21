@@ -2,7 +2,6 @@ package katas;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
@@ -34,11 +33,9 @@ public class Kata7 {
 
     public static String getSmallestBoxArtUrl(List<BoxArt> boxArts) {
 
-	Optional<String> boxUrl = boxArts.stream().min(
+	return boxArts.stream().min(
 		(box1, box2) -> Integer.compare(box1.getWidth() * box1.getHeight(), box2.getHeight() * box2.getWidth()))
-		.map(BoxArt::getUrl);
-
-	return boxUrl.isPresent() ? boxUrl.get() : "";
+		.map(BoxArt::getUrl).orElse("");
 
     }
 }

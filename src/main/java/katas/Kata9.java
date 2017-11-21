@@ -3,7 +3,6 @@ package katas;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
@@ -37,20 +36,16 @@ public class Kata9 {
 
     private static Date getMiddleInterestingMoment(List<InterestingMoment> moments) {
 
-	Optional<Date> middleMoment = moments.stream().filter(moment -> moment.getType().equals("Middle"))
-		.map(InterestingMoment::getTime).findFirst();
-
-	return middleMoment.isPresent() ? middleMoment.get() : null;
+	return moments.stream().filter(moment -> "Middle".equals(moment.getType())).map(InterestingMoment::getTime)
+		.findFirst().orElse(null);
 
     }
 
     private static String getSmallestBoxArtUrl(List<BoxArt> boxArts) {
 
-	Optional<String> boxUrl = boxArts.stream().min(
+	return boxArts.stream().min(
 		(box1, box2) -> Integer.compare(box1.getWidth() * box1.getHeight(), box2.getHeight() * box2.getWidth()))
-		.map(BoxArt::getUrl);
-
-	return boxUrl.isPresent() ? boxUrl.get() : "";
+		.map(BoxArt::getUrl).orElse("");
 
     }
 }

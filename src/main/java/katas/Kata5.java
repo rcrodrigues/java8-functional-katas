@@ -19,7 +19,7 @@ public class Kata5 {
 
 	List<Movie> movies = DataUtil.getMovies();
 
-	return movies.stream().map(Movie::getRating).max(Double::compare).orElse(0.0);
+	return movies.stream().map(Movie::getRating).reduce(Double::max).orElse(0.0);
 
     }
 }
