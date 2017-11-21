@@ -74,9 +74,10 @@ public class Kata11 {
 	return lists.stream()
 		.map(list -> ImmutableMap.of("name", list.get("name"), "videos",
 			videos.stream().filter(video -> video.get("listId").equals(list.get("id")))
-				.map(video -> ImmutableMap.of("id", video.get("id"), "title",
-					video.get("title"), "time", getTime(video.get("id"), bookmarkList), "boxart",
-					boxArts.stream().min(boxArtSize()).map(boxArt -> boxArt.get("url").toString())))
+				.map(video -> ImmutableMap.of("id", video.get("id"), "title", video.get("title"),
+					"time", getTime(video.get("id"), bookmarkList), "boxart",
+					boxArts.stream().filter(box -> video.get("id").equals(box.get("videoId")))
+						.min(boxArtSize()).map(boxArt -> boxArt.get("url")).orElse("")))
 				.collect(Collectors.toList())))
 		.collect(Collectors.toList());
 
